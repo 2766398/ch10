@@ -1,7 +1,7 @@
 public class Fraction{
 	
 	//instance variables
-	int numerator, denominator;
+	private int numerator, denominator;
 	
 	//constructor
 	public Fraction (){ //default
@@ -20,17 +20,22 @@ public class Fraction{
 	}
 	
 	public Fraction (String a){ //default
-		if(Integer.parseInt(a.substring(a.indexOf("/")))!=0){
-			denominator = Integer.parseInt(a.substring(a.indexOf("/")));
+		int slash = a.indexOf("/");
+		if(Integer.parseInt(a.substring(slash+1))!=0){
+			denominator = Integer.parseInt(a.substring(slash+1));
 		} else {
 			denominator = 1;
 			System.out.println("denominator cannot be 0");
 		} 
-		numerator = Integer.parseInt(a.substring(0,a.indexOf("/")));
+		numerator = Integer.parseInt(a.substring(0,slash));
 	}
 	
 	public String toString(){
 		return numerator + "/" + denominator;
+	}
+	
+	public double toDouble(){
+		return (double) numerator/denominator;
 	}
 	
 	public int numerator(){
@@ -38,22 +43,55 @@ public class Fraction{
 	}
 	
 	public int denominator(){
-		return numerator;
+		return denominator;
 	}
-		
-	public static Fraction mult (Fraction a, Fraction b){
+	
+	public void setNum(int a){
+		numerator = a;
+	}
+	
+	public void setDenom(int a){
+		denominator = a;
+	}
+	
+	public void reduce(){
+		numerator = numerator/gcf(numerator, denominator);
+		denominator = denominator/gcf(numerator, denominator);
+	}
+			
+	public static Fraction multiply(Fraction a, Fraction b){
 		int n = a.numerator()*b.numerator();
 		int d = a.denominator()*b.denominator();
-		return new Fraction(n,d); 
+		Fraction temp = new Fraction(n, d);
+		temp.reduce();
+		return temp;
 	}
 	
-	public static Fraction divide (Fraction a, Fraction b){
+	public static Fraction divide(Fraction a, Fraction b){
 		int n = a.numerator()*b.denominator();
 		int d = a.denominator()*b.numerator();
-		return new Fraction(n,d);
+		Fraction temp = new Fraction(n, d);
+		temp.reduce();
+		return temp;
 	}
 	
-	public static Fraction gcf (int a, int b){
+	public static Fraction add(Fraction a, Fraction b){
+		int ft = a.numerator*b.denominator+b.numerator*a.denominator;
+		int fb = a.denominator*b.denominator;
+		Fraction temp = new Fraction(ft, fb);
+		temp.reduce();
+		return temp;
+	}
+		
+	public static Fraction subtract(Fraction a, Fraction b){
+		int ft = a.numerator*b.denominator-b.numerator*a.denominator;
+		int fb = a.denominator*b.denominator;
+		Fraction temp = new Fraction(ft, fb);
+		temp.reduce();
+		return temp;
+	}
+	
+	public static int gcf (int a, int b){
 		while(a!=b){
 			if(a>b){
 				a=a-b;
@@ -62,8 +100,5 @@ public class Fraction{
 			}
 		}
 		return a;
-	
+	}
 }
-			
-			
-
