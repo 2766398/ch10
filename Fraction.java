@@ -1,12 +1,15 @@
+import java.util.Random;
+
 public class Fraction{
 	
+	Random random = new Random();
 	//instance variables
 	private int numerator, denominator;
 	
 	//constructor
 	public Fraction (){ //default
-		numerator = 1;
-		denominator = 1;
+		numerator = random.nextInt(100);
+		denominator = random.nextInt(100);
 	}
 
 	public Fraction (int n, int d){ //parameterized
@@ -101,5 +104,19 @@ public class Fraction{
 			}
 		}
 		return a;
+	}
+	
+	public static int toIntdiv(Fraction f){
+		return(f.numerator/f.denominator);
+	}
+	
+	public boolean equals(Fraction f){
+		if(f.denominator != denominator){
+			return false;
+		}
+		if(f.numerator != numerator){
+			return false;
+		}
+		return true;
 	}
 }
