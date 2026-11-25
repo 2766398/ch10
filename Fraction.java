@@ -55,8 +55,9 @@ public class Fraction{
 	}
 	
 	public void reduce(){
-		numerator = numerator/gcf(numerator, denominator);
-		denominator = denominator/gcf(numerator, denominator);
+		int divisor = gcf(numerator, denominator);
+		numerator = numerator/divisor;
+		denominator = denominator/divisor;
 	}
 			
 	public static Fraction multiply(Fraction a, Fraction b){
